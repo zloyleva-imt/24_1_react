@@ -1,0 +1,1 @@
+export const SET_DAYS_RANGE = 'SET_DAYS_RANGE';
