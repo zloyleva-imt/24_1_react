@@ -4,12 +4,12 @@ import {connect} from 'react-redux';
 import {actionSetDaysRange} from "../../store/actions/setDaysRange";
 
 
-const FormSetDaysRange = ({foo}) => {
+const FormSetDaysRange = ({actionSetDaysRangeHandler}) => {
 
     const [daysRange, setDaysRange] = useState(0);
 
     const onClickHandler = () => {
-        foo(daysRange);
+        actionSetDaysRangeHandler(daysRange);
     };
 
     return (
@@ -20,11 +20,8 @@ const FormSetDaysRange = ({foo}) => {
     );
 };
 
-const mapDistaptchToProps = dispatch => ({
-    foo: (daysRangeData) => dispatch({
-        ...actionSetDaysRange,
-        payload: daysRangeData
-    })
+const mapDispatchToProps = dispatch => ({
+    actionSetDaysRangeHandler: (daysRangeData) => dispatch(actionSetDaysRange(daysRangeData))
 });
 
-export default connect(null,mapDistaptchToProps)(FormSetDaysRange);
+export default connect(null,mapDispatchToProps)(FormSetDaysRange);

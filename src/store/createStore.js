@@ -1,10 +1,9 @@
-import {createStore} from "redux";
-import {SET_DAYS_RANGE} from "./constants/index";
+import { createStore, applyMiddleware, compose } from 'redux';
+import {SET_DAYS_RANGE, SET_EXCHANGE_DATA} from "./constants/index";
+import thunk from 'redux-thunk';
 
 const initState = {
-    currencyArray: [
-        {r030: 840, txt: "Долар США", rate: 24.9196, cc: "USD", exchangedate: "01.02.2020"}
-    ],
+    currencyArray: [],
     daysRange: []
 };
 
@@ -16,12 +15,21 @@ const reducer = (state = initState,{type,payload}) => {
                 ...state,
                 daysRange: [...new Array(Number(payload))],
             };
+        case SET_EXCHANGE_DATA:
+            return {
+                ...state,
+                currencyArray: [...payload],
+            };
         default:
             return {...state}
     }
 };
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = createStore(
     reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(
+        applyMiddleware(thunk)
+    )
 );
